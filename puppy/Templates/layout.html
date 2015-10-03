@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/shift.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <title>{% block title %}{% endblock %} - Puppy Adoption</title>
+    {% endblock %}
+  </head>
+  <body>
+
+    <div class="puppy-logo">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                     <div class="thumbnail">
+                        <img src="http://sellingrenoandsparks.com/image_store/uploads/5/7/9/9/1/ar123638524119975.jpg" width=100px>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <h1>Puppy Shelters</h1>
+                </div>
+            </div> 
+        </div>
+    </div>
+
+    <div class="nav">
+      <div class="container">
+          <ul class="pull-left">
+            <li><a href="#">About</a></li>
+          </ul>
+          <ul class="pull-right">
+            <li><a href="#">Puppies</a></li>
+            <li><a href="#">Shelters</a></li>
+            <li><a href="#">Owners</a></li>
+          </ul>
+        </div>
+      </div>
+      
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      &copy; Copyright 2015 by <a href="http://domain.invalid/">Greg Quinlan</a>.
+      {% endblock %}
+    </div>
+  </body>
+</html>
