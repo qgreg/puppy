@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Populate Puppies{% endblock %}
+{% block content %}
+
+<h1>Populate Puppies</h1>
+
+<form action='{{ url_for('puppyPopulator') }}' method= 'post' >
+
+	<p>Are you sure you want to populate puppies?</p>
+
+<input type = 'submit' value = 'Populate'> 
+<a href='{{ url_for('puppiesHome') }}' >Cancel</a>  
+
+</form>
+
+{% endblock %}

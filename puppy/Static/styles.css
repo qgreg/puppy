@@ -4,9 +4,9 @@ h1, h2          { }
 h1              { }
 h2              { font-size: 1.2em; }
 
-p, dd, dt       { color: #CCCCCC;}
+p, dd, dt       { }
 
-a 				{text-decoration: none; color:#FFFFCC; font-size: .75em;}
+a 				{text-decoration: none; font-size: .75em;}
 
 .pane 			{position:absolute; left: 25%; border: 2px solid;
     border-radius: 25px; padding: 5px; margin: 5px; border-color: #999999; background-color: #333333 }

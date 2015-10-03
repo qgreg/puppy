@@ -5,6 +5,8 @@ from puppy import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from puppyPopulator import puppyPopulate
+
 from models import Base, Shelter, Puppy, Adopter, Adoption, Mailing, PuppyProfile
 
 engine = create_engine('sqlite:///puppies.db')
@@ -30,16 +32,25 @@ BONUS: Pagination
 @app.route('/')
 @app.route('/home/')
 def puppiesHome():
-	print "This works, four."
 	return render_template('index.html')
 
-"""
+
 @app.route('/puppy/')
 def puppyListFull():
     puppy = session.query(Puppy).all()
-    return render_template('puppylist.html', puppy = puppy)
+    profile = session.query(PuppyProfile).all()
+    return render_template('puppylist.html', puppy = puppy, profile = profile)
 
+@app.route('/populate/', methods=['GET','POST'])
+def puppyPopulator():
+	if request.method == 'POST':
+		puppyPopulate()
+		flash("Puppies have been populated.")
+		return redirect(url_for('puppiesHome'))
+	else:
+		return render_template('populate.html')
 
+"""
 @app.route('/puppy/<int:puppy_id>/')
 def puppyList(puppy_id):
     puppy = session.query(Puppy).filter_by(id=puppy_id).one()

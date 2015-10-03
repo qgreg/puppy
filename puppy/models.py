@@ -14,8 +14,9 @@ class Shelter(Base):
     address = Column(String(250))
     city = Column(String(250))
     state = Column(String(2))
-    zip = Column(String(10))
+    zipCode = Column(String(10))
     email = Column(String(250))
+    website = Column(String(250))
     current_capacity = Column(Integer)
     max_capacity = Column(Integer)
     id = Column(Integer, primary_key=True)
@@ -26,10 +27,11 @@ class Puppy(Base):
 
     name =Column(String(80), nullable = False)
     id = Column(Integer, primary_key = True)
-    date_of_birth = Column(Date)
+    dateOfBirth = Column(Date)
     breed = Column(String(250))
     gender = Column(String(250))
     weight = Column(Integer)
+    picture = Column(String(250))
     shelter_id = Column(Integer,ForeignKey('shelter.id'))
     shelter = relationship(Shelter) 
 
@@ -44,7 +46,6 @@ class PuppyProfile(Base):
 
     puppy = relationship(Puppy)
     description = Column(String(250))
-    picture_url = Column(String(250))
     special_needs = Column(String(250))
     puppy_id = Column(Integer, ForeignKey('puppy.id'), 
         primary_key = True)
