@@ -4,10 +4,11 @@ from puppy import app
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-
-from puppyPopulator import puppyPopulate
+from datetime import datetime
 
 from models import Base, Shelter, Puppy, Adopter, Adoption, Mailing, PuppyProfile
+
+from puppyPopulator import puppyPopulate
 
 engine = create_engine('sqlite:///puppies.db')
 Base.metadata.bind = engine
@@ -41,6 +42,7 @@ def puppyListFull():
     profile = session.query(PuppyProfile).all()
     return render_template('puppylist.html', puppy = puppy, profile = profile)
 
+
 @app.route('/populate/', methods=['GET','POST'])
 def puppyPopulator():
 	if request.method == 'POST':
@@ -54,19 +56,29 @@ def puppyPopulator():
 @app.route('/puppy/<int:puppy_id>/')
 def puppyList(puppy_id):
     puppy = session.query(Puppy).filter_by(id=puppy_id).one()
+    #profile = session.query(PuppyProfile).filter_by(puppy_id=puppy_id).one()
     return render_template('puppylist.html', puppy = puppy)
+"""
+
 
 @app.route('/puppy/add/', methods=['GET','POST'])
 def puppyAdd():
 	if request.method == 'POST':
-		newItem = Puppy(name = request.form['name'])
+		formDate = datetime.strptime(request.form['dateOfBirth'],'%Y-%m-%d')
+		print formDate
+		newItem = Puppy(name = request.form['name'], 
+			dateOfBirth = formDate,
+			breed = request.form['breed'], gender = request.form['gender'],
+			weight = request.form['weight'], picture = request.form['picture'])
 		session.add(newItem)
 		session.commit()
 		flash("New puppy has been added.")
-		return redirect(url_for('puppiesHome'))
+		return redirect(url_for('puppyListFull'))
 	else:
 		return render_template('puppyadd.html')
 
+
+"""
 @app.route('/puppy/<int:puppy_id>/edit/', methods=['GET','POST'])
 def puppyEdit(puppy_id):
 	if request.method == 'POST':
