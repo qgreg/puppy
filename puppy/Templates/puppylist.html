@@ -1,41 +1,46 @@
 {% extends "layout.html" %}
 {% block title %}Puppies{% endblock %}
 {% block content %}
-	<div class = 'header'>
-+		<h1>Puppies</h1>
-+	</div>
-
-+	<div class = 'flash'>
-	{% with messages = get_flashed_messages() %}
-   		{% if messages %}
-      		 <ul>
-	    	 	{% for message in messages %}
-		 			<li> <strong>{{ message }}</strong></li>
-	    		{% endfor %}
-      		 </ul>
-    	{% endif %}
-	{% endwith %}
-
+<div class='container'>
+	<h1>Puppies</h1>
+	<div class = 'flash'>
+		{% with messages = get_flashed_messages() %}
+   			{% if messages %}
+      		 	<ul>
+	    	 		{% for message in messages %}
+		 				<li> <strong>{{ message }}</strong></li>
+	    			{% endfor %}
+      		 	</ul>
+    		{% endif %}
+		{% endwith %}
 	</div>
 
-	<a href='#' >Create new puppy.<a>
+	<a href="{{ url_for('puppyListFull') }}" >Create new puppy.<a>
 
-	{% for pup in puppy %}
+ 	<div class="row">
+                
+		{% for pup in puppy %}
+			<div class="col-md-4">
+				<div class="thumbnail">
+                	<img src="{{pup.picture}}" style="min-height:200px;height:200px;">
+            	</div>
 
-		<div class = 'nameAndPrice'>
-			<span class = 'name'><p>{{pup.name}}</p></span>
-			<span class = 'breed'><p>{{pup.breed}}</p></span>
-			<span class = 'gender'><p>{{pup.gender}}</p></span>
-			<span class = 'weight'><p>{{pup.weigt}}</p></span>
-			<span class = 'dateofbirth'><p> {{pup.dateOfBirth}} </p></span>
-			<!-- Address shelters -->
-			<!-- Address puppy profiles -->
-		</div>
+				<div class = 'nameAndPrice'>
+					<p>{{pup.id}} {{pup.name}}</p>
+					<p>{{pup.breed}}</p>
+					<p>{{pup.gender}}</p>
+					<p>{{pup.weight}}</p>
+					<p> {{pup.dateOfBirth}}</p>
+					<!-- Address shelters -->
+					<!-- Address puppy profiles -->
+				</div>
 
-		<div class = "editdeletepane">
-			<a href='#' >Edit</a> 
-			<a href='#' >Delete</a> 
-		</div>
-
-	{% endfor %}
+				<div class = "editdeletepane">
+					<a href='#' >Edit</a> 
+					<a href='#' >Delete</a> 
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>	
 {% endblock %}
