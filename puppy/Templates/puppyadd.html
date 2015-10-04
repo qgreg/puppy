@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Add A Puppy{% endblock %}
+{% block content %}
+
+<div class="container">
+
+	<h1>Add a Puppy</h1>
+
+	<form action='{{ url_for('puppyAdd')}}' method= 'post' >
+
+  	<div class="form-group">
+    	<label for="namer">Name</label>
+    	<input type="text" class="form-control" id="namer" name='name' placeholder="Name">
+  	</div>
+  	<div class="form-group">
+    	<label for="breeder">Breed</label>
+    	<input type="text" class="form-control" id="breeder" name='breed' placeholder="Breed">
+  	</div>
+  	<div class="form-group">
+    	<label for="genderer">Gender</label>
+    	<input type="text" class="form-control" id="genderer" name='gender' placeholder="Gender">
+  	</div>
+  	<div class="form-group">
+    	<label for="weighter">Weight</label>
+    	<input type="number" class="form-control" id="weighter" name='weight' placeholder="Weight">
+  	</div>
+  	<div class="form-group">
+    	<label for="birther">Date of Birth</label>
+    	<input type="date" class="form-control" id="birther" name='dateOfBirth' placeholder="Date">
+  	</div>
+  	<div class="form-group">
+    	<label for="puppyphoto">URL of Puppy Photo</label>
+    	<input type="url" class="form-control" id="puppyphoto" name='picture' placeholder="http://domain.com/puppy.jpg">
+  	</div>
+  	<div class="form-group">
+		<input type = 'submit' value = 'Create'> 
+  	</div>
+  	<div class="form-group">
+		<a href="{{url_for('puppyListFull')}}">Cancel<a>
+  	</div>
+  </div>
+</form>
+{% endblock %}
