@@ -5,6 +5,7 @@
     <link href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/shift.css" rel="stylesheet">
     <link rel="stylesheet" href="http://s3.amazonaws.com/codecademy-content/courses/ltp/css/bootstrap.css">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}{% endblock %} - Puppy Adoption</title>
     {% endblock %}
   </head>
@@ -31,7 +32,7 @@
             <li><a href="#">About</a></li>
           </ul>
           <ul class="pull-right">
-            <li><a href="#">Puppies</a></li>
+            <li><a href="{{url_for('puppyListFull')}}">Puppies</a></li>
             <li><a href="#">Shelters</a></li>
             <li><a href="#">Owners</a></li>
           </ul>
