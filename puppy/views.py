@@ -97,7 +97,6 @@ def puppyEdit(puppy_id):
 		return render_template('puppyedit.html', puppy_id=editItem.id, editItem = editItem)
 
 
-"""
 @app.route('/puppy/<int:puppy_id>/delete/', methods=['GET','POST'])
 def puppyDelete(puppy_id):
 	if request.method == 'POST':
@@ -105,12 +104,12 @@ def puppyDelete(puppy_id):
 		session.delete(deletePuppy)
 		session.commit()
 		flash("Puppy has been deleted.")
-		return redirect(url_for('puppyList', puppy_id=puppy_id))
+		return redirect(url_for('puppyListFull'))
 	else:
-		deleteItem = session.query(Puppy).filter_by(id=puppy_id).one()
-		return render_template('deletepuppy.html', puppy_id = deletePuppy.id, deleteItem=deletePuppy)
+		deletePuppy = session.query(Puppy).filter_by(id=puppy_id).one()
+		return render_template('puppydelete.html', puppy_id = deletePuppy.id, deletePuppy=deletePuppy)
 
-
+"""
 @app.route('/restaurants/<int:restaurant_id>/menu/JSON')
 def restaurantMenuJSON(restaurant_id):
 	restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
