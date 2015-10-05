@@ -37,7 +37,7 @@ def puppiesHome():
 
 
 @app.route('/puppy/')
-def puppyListFull():
+def puppyList():
     puppy = session.query(Puppy).all()
     profile = session.query(PuppyProfile).all()
     return render_template('puppylist.html', puppy = puppy, profile = profile)
@@ -53,8 +53,8 @@ def puppyPopulator():
 		return render_template('populate.html')
 
 
-@app.route('/puppy/<int:puppy_id>/')
-def puppyList(puppy_id):
+@app.route('/puppy/one/<int:puppy_id>/')
+def puppyOne(puppy_id):
     puppy = session.query(Puppy).filter_by(id=puppy_id).one()
     #profile = session.query(PuppyProfile).filter_by(puppy_id=puppy_id).one()
     return render_template('puppyone.html', pup = puppy)
@@ -72,7 +72,7 @@ def puppyAdd():
 		session.add(newItem)
 		session.commit()
 		flash("New puppy has been added.")
-		return redirect(url_for('puppyListFull'))
+		return redirect(url_for('puppyList'))
 	else:
 		return render_template('puppyadd.html')
 
@@ -91,7 +91,7 @@ def puppyEdit(puppy_id):
 		session.add(editPuppy)
 		session.commit()
 		flash("Puppy has been edited.")
-		return redirect(url_for('puppyList', puppy_id = puppy_id))
+		return redirect(url_for('puppyOne', puppy_id = puppy_id))
 	else:
 		editItem = session.query(Puppy).filter_by(id=puppy_id).one()
 		return render_template('puppyedit.html', puppy_id=editItem.id, editItem = editItem)
@@ -104,7 +104,7 @@ def puppyDelete(puppy_id):
 		session.delete(deletePuppy)
 		session.commit()
 		flash("Puppy has been deleted.")
-		return redirect(url_for('puppyListFull'))
+		return redirect(url_for('puppyList'))
 	else:
 		deletePuppy = session.query(Puppy).filter_by(id=puppy_id).one()
 		return render_template('puppydelete.html', puppy_id = deletePuppy.id, deletePuppy=deletePuppy)

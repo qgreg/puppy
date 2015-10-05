@@ -2,20 +2,23 @@
 {% block title %}Puppies{% endblock %}
 {% block content %}
 <div class='container'>
-	<h1>Puppies</h1>
-	<div class = 'flash'>
-		{% with messages = get_flashed_messages() %}
-   			{% if messages %}
-      		 	<ul>
-	    	 		{% for message in messages %}
-		 				<li> <strong>{{ message }}</strong></li>
-	    			{% endfor %}
-      		 	</ul>
-    		{% endif %}
-		{% endwith %}
-	</div>
 
-	<a href="{{ url_for('puppyListFull') }}" >Create new puppy.<a>
+		<h1>Puppies</h1>
+		<div class = 'flash'>
+			{% with messages = get_flashed_messages() %}
+   				{% if messages %}
+      		 		<ul>
+	    	 			{% for message in messages %}
+		 					<li> <strong>{{ message }}</strong></li>
+	    				{% endfor %}
+      		 		</ul>
+    			{% endif %}
+			{% endwith %}
+		</div>
+
+		<a href="{{ url_for('puppyAdd') }}" class="btn btn-info" role="button">Create new puppy.<a>
+
+<hr>
 
  	<div class="row">
                 
@@ -36,8 +39,8 @@
 				</div>
 
 				<div class = "editdeletepane">
-					<a href='#' >Edit</a> 
-					<a href='#' >Delete</a> 
+					<a href='{{url_for('puppyEdit', puppy_id=pup.id) }}' >Edit</a> 
+					<a href='{{url_for('puppyDelete', puppy_id=pup.id) }}' >Delete</a> 
 				</div>
 			</div>
 		{% endfor %}
