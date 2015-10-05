@@ -52,13 +52,12 @@ def puppyPopulator():
 	else:
 		return render_template('populate.html')
 
-"""
+
 @app.route('/puppy/<int:puppy_id>/')
 def puppyList(puppy_id):
     puppy = session.query(Puppy).filter_by(id=puppy_id).one()
     #profile = session.query(PuppyProfile).filter_by(puppy_id=puppy_id).one()
-    return render_template('puppylist.html', puppy = puppy)
-"""
+    return render_template('puppyone.html', pup = puppy)
 
 
 @app.route('/puppy/add/', methods=['GET','POST'])
@@ -78,21 +77,27 @@ def puppyAdd():
 		return render_template('puppyadd.html')
 
 
-"""
 @app.route('/puppy/<int:puppy_id>/edit/', methods=['GET','POST'])
 def puppyEdit(puppy_id):
 	if request.method == 'POST':
 		editPuppy = session.query(Puppy).filter_by(id=puppy_id).one()
 		editPuppy.name = request.form['name']
+		editPuppy.dateOfBirth = datetime.strptime(request.form['dateOfBirth'],'%Y-%m-%d')
+		#Handle above ValueErrors
+		editPuppy.breed = request.form['breed']
+		editPuppy.gender = request.form['gender']
+		editPuppy.weight = request.form['weight']
+		editPuppy.picture = request.form['picture']
 		session.add(editPuppy)
 		session.commit()
 		flash("Puppy has been edited.")
 		return redirect(url_for('puppyList', puppy_id = puppy_id))
 	else:
 		editItem = session.query(Puppy).filter_by(id=puppy_id).one()
-		return render_template('editpuppy.html', puppy_id=editIt.restaurant_id, menu_id = editItem.id, editedItem = editItem)
+		return render_template('puppyedit.html', puppy_id=editItem.id, editItem = editItem)
 
 
+"""
 @app.route('/puppy/<int:puppy_id>/delete/', methods=['GET','POST'])
 def puppyDelete(puppy_id):
 	if request.method == 'POST':

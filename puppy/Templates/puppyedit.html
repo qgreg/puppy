@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Edit A Puppy{% endblock %}
+{% block content %}
+
+<div class="container">
+
+	<h1>Edit a Puppy</h1>
+
+	<form action='{{ url_for('puppyEdit', puppy_id=puppy_id)}}' method= 'post' >
+
+  	<div class="form-group">
+    	<label for="namer">Name</label>
+    	<input type="text" class="form-control" id="namer" name='name' value="{{editItem.name}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="breeder">Breed</label>
+    	<input type="text" class="form-control" id="breeder" name='breed' value="{{editItem.breed}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="genderer">Gender</label>
+    	<input type="text" class="form-control" id="genderer" name='gender' value="{{editItem.gender}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="weighter">Weight</label>
+    	<input type="number" class="form-control" id="weighter" name='weight' value="{{editItem.weight}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="birther">Date of Birth</label>
+    	<input type="date" class="form-control" id="birther" name='dateOfBirth' value="{{editItem.dateOfBirth}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="puppyphoto">URL of Puppy Photo</label>
+    	<input type="url" class="form-control" id="puppyphoto" name='picture' value="{{editItem.picture}}">
+  	</div>
+  	<div class="form-group">
+		<input type = 'submit' value = 'Create'> 
+  	</div>
+  	<div class="form-group">
+		<a href="{{url_for('puppyList', puppy_id=editItem.id)}}">Cancel<a>
+  	</div>
+  </div>
+</form>
+{% endblock %}

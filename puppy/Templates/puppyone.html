@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}Puppy - {{pup.name}}{% endblock %}
+{% block content %}
+<div class='container'>
+	<h1>Puppy - {{pup.name}}</h1>
+	<div class = 'flash'>
+		{% with messages = get_flashed_messages() %}
+   			{% if messages %}
+      		 	<ul>
+	    	 		{% for message in messages %}
+		 				<li> <strong>{{ message }}</strong></li>
+	    			{% endfor %}
+      		 	</ul>
+    		{% endif %}
+		{% endwith %}
+	</div>
+
+	<a href="{{ url_for('puppyAdd') }}" >Create new puppy.<a>
+
+ 	<div class="row">
+                
+		<div class="col-md-4">
+			<div class="thumbnail">
+               	<img src="{{pup.picture}}" style="min-height:200px;height:200px;">
+           	</div>
+
+			<div class = 'nameAndPrice'>
+				<p>{{pup.id}} {{pup.name}}</p>
+				<p>{{pup.breed}}</p>
+				<p>{{pup.gender}}</p>
+				<p>{{pup.weight}}</p>
+				<p> {{pup.dateOfBirth}}</p>
+					<!-- Address shelters -->
+					<!-- Address puppy profiles -->
+			</div>
+
+			<div class = "editdeletepane">
+				<a href='#' >Edit</a> 
+				<a href='#' >Delete</a> 
+			</div>
+		</div>
+	</div>
+</div>	
+{% endblock %}
