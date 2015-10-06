@@ -5,12 +5,13 @@ from puppy import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-from config import PUPPY_POST_PER_PAGE
+from config import PUPPY_POST_PER_PAGE, SHELTER_POST_PER_PAGE
 
 from models import Base, Shelter, Puppy, Adopter, Adoption, Mailing, PuppyProfile
 
 from puppyPopulator import puppyPopulate
 from pagination import Pagination
+from puppyimagefixer import puppyPicFix
 
 engine = create_engine('sqlite:///puppies.db')
 Base.metadata.bind = engine
@@ -21,14 +22,17 @@ session = DBSession()
 In your Python code, you should add methods for performing all 
 of the database functionalities described below:
 
-All CRUD operations on Puppies, Shelters, and Owners
+All CRUD operations on 
+X	Puppies, 
+	Shelters, 
+	and Owners
 Switching or Balancing Shelter Population and Protecting 
 	against overflows
 Viewing a Puppy Profile
 Adopting a New Puppy
-Creating and Styling Templates (optionally with Bootstrap)
-Adding Flash Messages
-BONUS: Pagination
+X Creating and Styling Templates (optionally with Bootstrap)
+X Adding Flash Messages
+X BONUS: Pagination
 """
 
 
@@ -49,16 +53,6 @@ def puppyList(page=1):
 	print "Count ", count, "Offset ", offset, "Page ", page, \
 		"Limit ", PUPPY_POST_PER_PAGE, "Pages ", paginate.pages
 	return render_template('puppylist.html', puppy = puppy, profile = profile, page = page, paginate = paginate)
-
-
-@app.route('/populate/', methods=['GET','POST'])
-def puppyPopulator():
-	if request.method == 'POST':
-		puppyPopulate()
-		flash("Puppies have been populated.")
-		return redirect(url_for('puppiesHome'))
-	else:
-		return render_template('populate.html')
 
 
 @app.route('/puppy/one/<int:puppy_id>/')
@@ -117,21 +111,53 @@ def puppyDelete(puppy_id):
 		deletePuppy = session.query(Puppy).filter_by(id=puppy_id).one()
 		return render_template('puppydelete.html', puppy_id = deletePuppy.id, deletePuppy=deletePuppy)
 
-"""
-@app.route('/restaurants/<int:restaurant_id>/menu/JSON')
-def restaurantMenuJSON(restaurant_id):
-	restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
-	items = session.query(MenuItem).filter_by(
-		restaurant_id = restaurant.id).all()
-	return jsonify(MenuItems=[i.serialize for i in items])
+
+@app.route('/shelter/')
+@app.route('/shelter/<int:page>/')
+def shelterList(page=1):
+	count = session.query(Shelter).count()
+	offset = (page - 1) * SHELTER_POST_PER_PAGE
+	shelter = session.query(Shelter).order_by(Shelter.id).slice(offset, offset + SHELTER_POST_PER_PAGE)
+	paginate = Pagination(page, SHELTER_POST_PER_PAGE, count)
+	print "Count ", count, "Offset ", offset, "Page ", page, \
+		"Limit ", SHELTER_POST_PER_PAGE, "Pages ", paginate.pages
+	return render_template('shelterlist.html', shelter = shelter, page = page, paginate = paginate)
 
 
-@app.route('/restaurants/<int:restaurant_id>/menu/<int:menu_id>/JSON')
-def restaurantMenuItemJSON(restaurant_id, menu_id):
-	item = session.query(MenuItem).filter_by(
-		id = menu_id).one()
-	return jsonify(MenuItems=[item.serialize])
-"""
+@app.route('/shelter/add/', methods=['GET','POST'])
+def shelterAdd():
+	return "<a href='{{url_for('puppiesHome')}}'>Home</a>"
+
+
+@app.route('/shelter/<int:shelter_id>/edit/', methods=['GET','POST'])
+def shelterEdit(shelter_id):
+	return "<a href='{{url_for('puppiesHome')}}'>Home</a>"
+
+
+@app.route('/shelter/<int:shelter_id>/delete/', methods=['GET','POST'])
+def shelterDelete(shelter_id):
+		return "<a href='{{url_for('puppiesHome')}}'>Home</a>"
+
+
+@app.route('/populate/', methods=['GET','POST'])
+def puppyPopulator():
+	if request.method == 'POST':
+		puppyPopulate()
+		flash("Puppies have been populated.")
+		return redirect(url_for('puppiesHome'))
+	else:
+		return render_template('populate.html')
+
+
+@app.route('/picfix/', methods=['GET','POST'])
+def puppyPicFixer():
+	if request.method == 'POST':
+		puppyPicFix()
+		flash("Puppies images have been replaced.")
+		return redirect(url_for('puppyList'))
+	else:
+		return render_template('picfix.html')
+
 
 if __name__ == '__main__':
 	app.secret_key = 'super_secret_key'

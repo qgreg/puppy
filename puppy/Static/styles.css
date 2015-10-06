@@ -17,12 +17,16 @@ a 				{text-decoration: none; font-size: .75em;}
 .editdeletepane	{}
 
 .flash          { background: #cee5F5; }
+.nav {
+  background-color: orange;
+}
 .nav a {
   color: #5a5a5a;
   font-size: 12px;
   font-weight: bold;
   padding: 14px 10px;
   text-transform: uppercase;
+  background-color: orange;
 }
 
 .nav li {
@@ -51,4 +55,8 @@ a 				{text-decoration: none; font-size: .75em;}
 .jumbotron p {
   font-size: 20px;
   color: black;
+}
+
+.footer {
+  background-color: orange;
 }

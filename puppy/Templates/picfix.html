@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Image Fix Puppies{% endblock %}
+{% block content %}
+
+<h1>Puppies Image Fixer</h1>
+
+<form action='{{ url_for('puppyPicFixer') }}' method= 'post' >
+
+	<p>Are you sure you want to fix puppies images?</p>
+
+<input type = 'submit' value = 'Fix'> 
+<a href='{{ url_for('puppiesHome') }}' >Cancel</a>  
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block title %}Shelters{% endblock %}
+{% block content %}
+<div class='container'>
+
+		<h1>Shelters</h1>
+		<div class = 'flash'>
+			{% with messages = get_flashed_messages() %}
+   				{% if messages %}
+      		 		<ul>
+	    	 			{% for message in messages %}
+		 					<li> <strong>{{ message }}</strong></li>
+	    				{% endfor %}
+      		 		</ul>
+    			{% endif %}
+			{% endwith %}
+		</div>
+
+		<a href="{{ url_for('shelterAdd') }}" class="btn btn-info" role="button">Create new puppy.<a>
+
+<hr>
+
+ 	<div class="row">
+                
+		{% for i in shelter %}
+			<div class="col-md-4">
+
+				<div class = 'nameAndPrice'>
+					<p>{{i.id}} <a href="{{i.website}}">{{i.name}}</a></p>
+					<p>{{i.address}}</p>
+					<p>{{i.city}}, {{i.state}} {{i.zipCode}}</p>
+					<p>{{i.email}}</p>
+					<p>Current Capacity: {{i.current_capacity}}</p>
+					<p>Max Capacity: {{i.max_capacity}}</p>
+				</div>
+
+				<div class = "editdeletepane">
+					<a href='{{url_for('shelterEdit', shelter_id=i.id) }}' >Edit</a> 
+					<a href='{{url_for('shelterDelete', shelter_id=i.id) }}' >Delete</a> 
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>	
+
+<nav>
+  <ul class="pager">
+    <li>
+    	{% if paginate.has_prev %}
+    		<a href="{{ url_for('shelterList', page=paginate.prev_num) }}">Previous</a>
+    	{% else %}
+    		Previous
+    	{% endif %}
+    </li>
+    <li>
+    	{% if paginate.has_next %}
+    		<a href="{{ url_for('shelterList', page=paginate.next_num) }}">Next</a>
+    	{% else %}
+    		Next
+    	{% endif %}
+    </li>
+  </ul>
+</nav>
+{% endblock %}	
