@@ -123,6 +123,11 @@ def shelterList(page=1):
 	return render_template('shelterlist.html', shelter = shelter, page = page, paginate = paginate)
 
 
+@app.route('/shelter/one/<int:shelter_id>/')
+def shelterOne(shelter_id):
+	return "<a href='{{url_for('puppiesHome')}}'>Home</a>"
+
+
 @app.route('/shelter/add/', methods=['GET','POST'])
 def shelterAdd():
 	if request.method == 'POST':		
@@ -130,13 +135,11 @@ def shelterAdd():
 		newItem.address = request.form['address']
 		newItem.city = request.form['city']
 		newItem.state = request.form['state']
-		"""
 		newItem.zipCode = request.form['zipCode']
 		newItem.email = request.form['email']
 		newItem.website = request.form['website']
 		newItem.current_capacity = request.form['current_capacity']
 		newItem.max_capacity = request.form['max_capacity']
-		"""
 		session.add(newItem)
 		session.commit()
 		flash("New shelter has been added.")
@@ -144,9 +147,27 @@ def shelterAdd():
 	else:
 		return render_template('shelteradd.html')
 
+
 @app.route('/shelter/<int:shelter_id>/edit/', methods=['GET','POST'])
 def shelterEdit(shelter_id):
-	return "<a href='{{url_for('puppiesHome')}}'>Home</a>"
+	if request.method == 'POST':
+		editShelter = session.query(Shelter).filter_by(id=shelter_id).one()
+		editShelter = Shelter(name = request.form['name'])
+		editShelter.address = request.form['address']
+		editShelter.city = request.form['city']
+		editShelter.state = request.form['state']
+		editShelter.zipCode = request.form['zipCode']
+		editShelter.email = request.form['email']
+		editShelter.website = request.form['website']
+		editShelter.current_capacity = request.form['current_capacity']
+		editShelter.max_capacity = request.form['max_capacity']
+		session.add(editShelter)
+		session.commit()
+		flash("shelter has been edited.")
+		return redirect(url_for('shelterOne', shelter_id = shelter_id))
+	else:
+		editItem = session.query(Shelter).filter_by(id=shelter_id).one()
+		return render_template('shelteredit.html', shelter_id=editItem.id, editItem = editItem)
 
 
 @app.route('/shelter/<int:shelter_id>/delete/', methods=['GET','POST'])

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block title %}Edit A Shelter{% endblock %}
+{% block content %}
+
+<div class="container">
+
+	<h1>Edit a Shelter</h1>
+
+	<form action="{{ url_for('shelterEdit', shelter_id=shelter_id) }}" method='post' >
+
+  	<div class="form-group">
+    	<label for="namer">Name</label>
+    	<input type="text" class="form-control" id="namer" name='name' value="{{editItem.name}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="addresser">Address</label>
+    	<input type="text" class="form-control" id="sddresser" name='address' value="{{editItem.address}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="citizer">City</label>
+    	<input type="text" class="form-control" id="citizer" name='city' value="{{editItem.city}}">
+  	</div>
+    <div class="form-group">
+      <label for="stater">State</label>
+      <input type="text" class="form-control" id="stater" name='state' value="{{editItem.state}}">
+    </div>
+  	<div class="form-group">
+    	<label for="zipCoder">Zip Code</label>
+    	<input type="text" class="form-control" id="zipCoder" name='zipCode' value="{{editItem.zipCode}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="emailer">Email</label>
+    	<input type="text" class="form-control" id="emailer" name='email' value="{{editItem.email}}">
+  	</div>
+  	<div class="form-group">
+    	<label for="websiter">URL of Website</label>
+    	<input type="url" class="form-control" id="websiter" name='website' value="{{editItem.website}}">
+  	</div>
+    <div class="form-group">
+      <label for="currenter">Current Capacity</label>
+      <input type="number" class="form-control" id="currenter" name='current_capacity' value="{{editItem.current_capacity}}">
+    </div>
+    <div class="form-group">
+      <label for="maxer">Max Capacity</label>
+      <input type="number" class="form-control" id="maxer" name='max_capacity' value="{{editItem.max_capacity}}">
+    </div>
+  	<div class="form-group">
+		  <input type = 'submit' value = 'Edit'> 
+  	</div>
+  	<div class="form-group">
+    <a href="{{url_for('shelterOne', shelter_id=editItem.id)}}">Cancel<a>
+  	</div>
+  </form>
+</div>
+
+{% endblock %}
