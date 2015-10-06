@@ -5,10 +5,12 @@ from puppy import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
+from config import PUPPY_POST_PER_PAGE
 
 from models import Base, Shelter, Puppy, Adopter, Adoption, Mailing, PuppyProfile
 
 from puppyPopulator import puppyPopulate
+from pagination import Pagination
 
 engine = create_engine('sqlite:///puppies.db')
 Base.metadata.bind = engine
@@ -37,10 +39,16 @@ def puppiesHome():
 
 
 @app.route('/puppy/')
-def puppyList():
-    puppy = session.query(Puppy).all()
-    profile = session.query(PuppyProfile).all()
-    return render_template('puppylist.html', puppy = puppy, profile = profile)
+@app.route('/puppy/<int:page>/')
+def puppyList(page=1):
+	count = session.query(Puppy).count()
+	offset = (page - 1) * PUPPY_POST_PER_PAGE
+	puppy = session.query(Puppy).order_by(Puppy.id).slice(offset, offset + PUPPY_POST_PER_PAGE)
+	paginate = Pagination(page, PUPPY_POST_PER_PAGE, count)
+	profile = session.query(PuppyProfile).all()
+	print "Count ", count, "Offset ", offset, "Page ", page, \
+		"Limit ", PUPPY_POST_PER_PAGE, "Pages ", paginate.pages
+	return render_template('puppylist.html', puppy = puppy, profile = profile, page = page, paginate = paginate)
 
 
 @app.route('/populate/', methods=['GET','POST'])

@@ -46,4 +46,23 @@
 		{% endfor %}
 	</div>
 </div>	
-{% endblock %}
+
+<nav>
+  <ul class="pager">
+    <li>
+    	{% if paginate.has_prev %}
+    		<a href="{{ url_for('puppyList', page=paginate.prev_num) }}">Previous</a>
+    	{% else %}
+    		Previous
+    	{% endif %}
+    </li>
+    <li>
+    	{% if paginate.has_next %}
+    		<a href="{{ url_for('puppyList', page=paginate.next_num) }}">Next</a>
+    	{% else %}
+    		Next
+    	{% endif %}
+    </li>
+  </ul>
+</nav>
+{% endblock %}	
