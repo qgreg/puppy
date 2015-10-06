@@ -66,7 +66,6 @@ def puppyOne(puppy_id):
 def puppyAdd():
 	if request.method == 'POST':
 		formDate = datetime.strptime(request.form['dateOfBirth'],'%Y-%m-%d')
-		print formDate
 		newItem = Puppy(name = request.form['name'], 
 			dateOfBirth = formDate,
 			breed = request.form['breed'], gender = request.form['gender'],
@@ -126,8 +125,24 @@ def shelterList(page=1):
 
 @app.route('/shelter/add/', methods=['GET','POST'])
 def shelterAdd():
-	return "<a href='{{url_for('puppiesHome')}}'>Home</a>"
-
+	if request.method == 'POST':		
+		newItem = Shelter(name = request.form['name'])
+		newItem.address = request.form['address']
+		newItem.city = request.form['city']
+		newItem.state = request.form['state']
+		"""
+		newItem.zipCode = request.form['zipCode']
+		newItem.email = request.form['email']
+		newItem.website = request.form['website']
+		newItem.current_capacity = request.form['current_capacity']
+		newItem.max_capacity = request.form['max_capacity']
+		"""
+		session.add(newItem)
+		session.commit()
+		flash("New shelter has been added.")
+		return redirect(url_for('shelterList'))
+	else:
+		return render_template('shelteradd.html')
 
 @app.route('/shelter/<int:shelter_id>/edit/', methods=['GET','POST'])
 def shelterEdit(shelter_id):
