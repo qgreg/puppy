@@ -125,7 +125,8 @@ def shelterList(page=1):
 
 @app.route('/shelter/one/<int:shelter_id>/')
 def shelterOne(shelter_id):
-	return "<a href='{{url_for('puppiesHome')}}'>Home</a>"
+    shelter = session.query(Shelter).filter_by(id=shelter_id).one()
+    return render_template('shelterone.html', shelter = shelter)
 
 
 @app.route('/shelter/add/', methods=['GET','POST'])
@@ -152,7 +153,7 @@ def shelterAdd():
 def shelterEdit(shelter_id):
 	if request.method == 'POST':
 		editShelter = session.query(Shelter).filter_by(id=shelter_id).one()
-		editShelter = Shelter(name = request.form['name'])
+		editShelter.name = request.form['name']
 		editShelter.address = request.form['address']
 		editShelter.city = request.form['city']
 		editShelter.state = request.form['state']
