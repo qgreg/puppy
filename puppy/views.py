@@ -173,8 +173,16 @@ def shelterEdit(shelter_id):
 
 @app.route('/shelter/<int:shelter_id>/delete/', methods=['GET','POST'])
 def shelterDelete(shelter_id):
-		return "<a href='{{url_for('puppiesHome')}}'>Home</a>"
-
+	if request.method == 'POST':
+		deleteShelter = session.query(Shelter).filter_by(id=shelter_id).one()
+		session.delete(deleteShelter)
+		session.commit()
+		flash("Shelter has been deleted.")
+		return redirect(url_for('shelterList'))
+	else:
+		deleteShelter = session.query(Shelter).filter_by(id=shelter_id).one()
+		return render_template('shelterdelete.html', shelter_id = deleteShelter.id, \
+			deleteShelter=deleteShelter)
 
 @app.route('/populate/', methods=['GET','POST'])
 def puppyPopulator():

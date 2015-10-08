@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Delete A Shelter{% endblock %}
+{% block content %}
+
+<div class="container">
+
+	<h1>Delete a Shelter</h1>
+
+	<form action='{{ url_for('shelterDelete', shelter_id=shelter_id)}}' method= 'post' >
+
+  	<div class="form-group">
+    	<p>Are you sure you want to delete {{deleteShelter.name}}?</p>
+    	<input type="submit" id="deleter" value="Delete"  class="btn btn-info">
+    	<p></p> 
+  	</div>
+
+  	<div class="form-group">
+    	<a href='{{ url_for('shelterOne', shelter_id = deleteShelter.id) }}' class="btn btn-info" role="button">Cancel</a> 
+  	</div>
+
+ 	</form>
+</div>
+{% endblock %}
