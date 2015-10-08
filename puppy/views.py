@@ -5,7 +5,7 @@ from puppy import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
-from config import PUPPY_POST_PER_PAGE, SHELTER_POST_PER_PAGE
+from config import PUPPY_POST_PER_PAGE, SHELTER_POST_PER_PAGE, ADOPTER_POST_PER_PAGE
 
 from models import Base, Shelter, Puppy, Adopter, Adoption, Mailing, PuppyProfile
 
@@ -24,7 +24,7 @@ of the database functionalities described below:
 
 All CRUD operations on 
 X	Puppies, 
-	Shelters, 
+X	Shelters, 
 	and Owners
 Switching or Balancing Shelter Population and Protecting 
 	against overflows
@@ -183,6 +183,90 @@ def shelterDelete(shelter_id):
 		deleteShelter = session.query(Shelter).filter_by(id=shelter_id).one()
 		return render_template('shelterdelete.html', shelter_id = deleteShelter.id, \
 			deleteShelter=deleteShelter)
+
+
+@app.route('/adopter/')
+@app.route('/adopter/<int:page>/')
+def adopterList(page=1):
+	count = session.query(Adopter).count()
+	offset = (page - 1) * ADOPTER_POST_PER_PAGE
+	adopter = session.query(Adopter).order_by(Adopter.id).slice(offset, offset + ADOPTER_POST_PER_PAGE)
+	paginate = Pagination(page, ADOPTER_POST_PER_PAGE, count)
+	return render_template('adopterlist.html', adopter = adopter, page = page, paginate = paginate)
+
+
+@app.route('/adopter/one/<int:adopter_id>/')
+def adopterOne(adopter_id):
+	print "Under Contruction"
+	"""
+    shelter = session.query(Shelter).filter_by(id=shelter_id).one()
+    return render_template('shelterone.html', shelter = shelter)
+    """
+
+
+@app.route('/adopter/add/', methods=['GET','POST'])
+def adopterAdd():
+	return "Under Contruction"
+	"""
+	if request.method == 'POST':		
+		newItem = Shelter(name = request.form['name'])
+		newItem.address = request.form['address']
+		newItem.city = request.form['city']
+		newItem.state = request.form['state']
+		newItem.zipCode = request.form['zipCode']
+		newItem.email = request.form['email']
+		newItem.website = request.form['website']
+		newItem.current_capacity = request.form['current_capacity']
+		newItem.max_capacity = request.form['max_capacity']
+		session.add(newItem)
+		session.commit()
+		flash("New shelter has been added.")
+		return redirect(url_for('shelterList'))
+	else:
+		return render_template('shelteradd.html')
+		"""
+
+
+@app.route('/adopter/<int:shelter_id>/edit/', methods=['GET','POST'])
+def adopterEdit(shelter_id):
+	return "Under Contruction"
+	"""
+	if request.method == 'POST':
+		editShelter = session.query(Shelter).filter_by(id=shelter_id).one()
+		editShelter.name = request.form['name']
+		editShelter.address = request.form['address']
+		editShelter.city = request.form['city']
+		editShelter.state = request.form['state']
+		editShelter.zipCode = request.form['zipCode']
+		editShelter.email = request.form['email']
+		editShelter.website = request.form['website']
+		editShelter.current_capacity = request.form['current_capacity']
+		editShelter.max_capacity = request.form['max_capacity']
+		session.add(editShelter)
+		session.commit()
+		flash("shelter has been edited.")
+		return redirect(url_for('shelterOne', shelter_id = shelter_id))
+	else:
+		editItem = session.query(Shelter).filter_by(id=shelter_id).one()
+		return render_template('shelteredit.html', shelter_id=editItem.id, editItem = editItem)
+		"""
+
+
+@app.route('/shelter/<int:shelter_id>/delete/', methods=['GET','POST'])
+def adopterDelete(shelter_id):
+	return "Under Contruction"
+	"""
+	if request.method == 'POST':
+		deleteShelter = session.query(Shelter).filter_by(id=shelter_id).one()
+		session.delete(deleteShelter)
+		session.commit()
+		flash("Shelter has been deleted.")
+		return redirect(url_for('shelterList'))
+	else:
+		deleteShelter = session.query(Shelter).filter_by(id=shelter_id).one()
+		return render_template('shelterdelete.html', shelter_id = deleteShelter.id, \
+			deleteShelter=deleteShelter)
+"""
 
 @app.route('/populate/', methods=['GET','POST'])
 def puppyPopulator():

@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block title %}Adopter{% endblock %}
+{% block content %}
+<div class='container'>
+
+		<h1>Adopters</h1>
+		<div class = 'flash'>
+			{% with messages = get_flashed_messages() %}
+   				{% if messages %}
+      		 		<ul>
+	    	 			{% for message in messages %}
+		 					<li> <strong>{{ message }}</strong></li>
+	    				{% endfor %}
+      		 		</ul>
+    			{% endif %}
+			{% endwith %}
+		</div>
+
+		<a href="{{ url_for('adopterAdd') }}" class="btn btn-info" role="button">Create new adopter.<a>
+
+<hr>
+
+ 	<div class="row">
+                
+		{% for i in adopter %}
+			<div class="col-md-4">
+
+				<div class = 'nameAndPrice'>
+					<h2>{{i.id}} <a href="{{i.website}}">{{i.name}}</a></h2>
+					<p>{{i.email}}</p>
+					<p>{{i.mailing_id}}</p>
+
+				</div>
+
+				<div class = "editdeletepane">
+					<a href='{{url_for('shelterEdit', adopter_id=i.id) }}' >Edit</a> 
+					<a href='{{url_for('shelterDelete', adopter_id=i.id) }}' >Delete</a> 
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>	
+
+<nav>
+  <ul class="pager">
+    <li>
+    	{% if paginate.has_prev %}
+    		<a href="{{ url_for('adopterList', page=paginate.prev_num) }}">Previous</a>
+    	{% else %}
+    		Previous
+    	{% endif %}
+    </li>
+    <li>
+    	{% if paginate.has_next %}
+    		<a href="{{ url_for('adopterList', page=paginate.next_num) }}">Next</a>
+    	{% else %}
+    		Next
+    	{% endif %}
+    </li>
+  </ul>
+</nav>
+{% endblock %}	
