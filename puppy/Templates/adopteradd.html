@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}Add A Adopter{% endblock %}
+{% block content %}
+
+<div class="container">
+
+	<h1>Add an Adopter</h1>
+
+	<form action="{{ url_for('adopterAdd') }}" method='post' >
+
+  	<div class="form-group">
+    	<label for="namer">Name</label>
+    	<input type="text" class="form-control" id="namer" name='name' placeholder="Name">
+  	</div>
+  	<div class="form-group">
+    	<label for="emailer">Email</label>
+    	<input type="text" class="form-control" id="emailer" name='email' placeholder="Email">
+  	</div>
+    <div class="form-group">
+      <label for="mailer">Mailing Id</label>
+      <input type="number" class="form-control" id="mailer" name='mailing_id'>
+    </div>
+  	<div class="form-group">
+		  <input type = 'submit' value = 'Create'> 
+  	</div>
+  	<div class="form-group">
+		  <a href="{{url_for('adopterList')}}">Cancel<a>
+  	</div>
+  </form>
+</div>
+
+{% endblock %}

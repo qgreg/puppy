@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Adopter{% endblock %}
+{% block content %}
+<div class='container'>
+
+		<h1>Adopter</h1>
+		<div class = 'flash'>
+			{% with messages = get_flashed_messages() %}
+   				{% if messages %}
+      		 		<ul>
+	    	 			{% for message in messages %}
+		 					<li> <strong>{{ message }}</strong></li>
+	    				{% endfor %}
+      		 		</ul>
+    			{% endif %}
+			{% endwith %}
+		</div>
+
+		<a href="{{ url_for('adopterAdd') }}" class="btn btn-info" role="button">Create new Adopter.<a>
+
+<hr>
+
+ 	<div class="row">
+                
+			<div class="col-md-4">
+
+				<div class = 'nameAndPrice'>
+					<p>{{adopter.id}} {{adopter.name}}</p>
+					<p>{{adopter.email}}</p>
+					<p>{{adopter.mailing_id}}</p>
+				</div>
+
+				<div class = "editdeletepane">
+					<a href='{{url_for('adopterEdit', adopter_id=adopter.id) }}' >Edit</a> 
+					<a href='{{url_for('adopterDelete', adopter_id=adopter.id) }}' >Delete</a> 
+				</div>
+			</div>
+	</div>
+</div>	
+
+{% endblock %}	

@@ -190,45 +190,36 @@ def shelterDelete(shelter_id):
 def adopterList(page=1):
 	count = session.query(Adopter).count()
 	offset = (page - 1) * ADOPTER_POST_PER_PAGE
-	adopter = session.query(Adopter).order_by(Adopter.id).slice(offset, offset + ADOPTER_POST_PER_PAGE)
-	paginate = Pagination(page, ADOPTER_POST_PER_PAGE, count)
-	return render_template('adopterlist.html', adopter = adopter, page = page, paginate = paginate)
-
+	print count
+	if count > 1:
+		adopter = session.query(Adopter).order_by(Adopter.id).slice(offset, offset + ADOPTER_POST_PER_PAGE)
+		paginate = Pagination(page, ADOPTER_POST_PER_PAGE, count)
+		return render_template('adopterlist.html', adopter = adopter, page = page, paginate = paginate)
+	else:
+		return "Zero"
 
 @app.route('/adopter/one/<int:adopter_id>/')
 def adopterOne(adopter_id):
-	print "Under Contruction"
-	"""
-    shelter = session.query(Shelter).filter_by(id=shelter_id).one()
-    return render_template('shelterone.html', shelter = shelter)
-    """
+    adopter = session.query(Adopter).filter_by(id=adopter_id).one()
+    return render_template('adopterone.html', adopter = adopter)
 
 
 @app.route('/adopter/add/', methods=['GET','POST'])
 def adopterAdd():
-	return "Under Contruction"
-	"""
 	if request.method == 'POST':		
-		newItem = Shelter(name = request.form['name'])
-		newItem.address = request.form['address']
-		newItem.city = request.form['city']
-		newItem.state = request.form['state']
-		newItem.zipCode = request.form['zipCode']
+		newItem = Adopter(name = request.form['name'])
 		newItem.email = request.form['email']
-		newItem.website = request.form['website']
-		newItem.current_capacity = request.form['current_capacity']
-		newItem.max_capacity = request.form['max_capacity']
+		newItem.mailing_id = request.form['mailing_id']
 		session.add(newItem)
 		session.commit()
-		flash("New shelter has been added.")
-		return redirect(url_for('shelterList'))
+		flash("New adopter has been added.")
+		return redirect(url_for('adopterList'))
 	else:
-		return render_template('shelteradd.html')
-		"""
+		return render_template('adopteradd.html')
 
 
-@app.route('/adopter/<int:shelter_id>/edit/', methods=['GET','POST'])
-def adopterEdit(shelter_id):
+@app.route('/adopter/<int:adopter_id>/edit/', methods=['GET','POST'])
+def adopterEdit(adopter_id):
 	return "Under Contruction"
 	"""
 	if request.method == 'POST':
@@ -252,8 +243,8 @@ def adopterEdit(shelter_id):
 		"""
 
 
-@app.route('/shelter/<int:shelter_id>/delete/', methods=['GET','POST'])
-def adopterDelete(shelter_id):
+@app.route('/adopter/<int:adopter_id>/delete/', methods=['GET','POST'])
+def adopterDelete(adopter_id):
 	return "Under Contruction"
 	"""
 	if request.method == 'POST':
